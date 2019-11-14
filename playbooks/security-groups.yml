@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  tasks:
+  - os_security_group:
+      state: present
+      name: twitter-app
+      description: Regras Firewall para infra twitter App
+
+  - os_security_group_rule:
+      security_group: twitter-app
+      protocol: tcp
+      port_range_min: "{{ item.portmin }}"
+      port_range_max: "{{ item.portmax }}"
+      remote_ip_prefix: "{{ item.dest }}"
+    with_items:
+    - { portmin: 22, portmax: 22, dest: "{{ meu_ip }}" }
+    - { portmin: 1, portmax: 65535, dest: 192.168.113.0/24 }
+    - { portmin: 9000, portmax: 9000, dest: 0.0.0.0/0 }
+    - { portmin: 80, portmax: 80, dest: 0.0.0.0/0 }
+    - { portmin: 443, portmax: 443, dest: 0.0.0.0/0 }
+
+  - os_security_group_rule:
+      security_group: twitter-app
+      protocol: udp
+      port_range_min: 1
+      port_range_max: 65535
+      remote_ip_prefix: 192.168.113.0/24 

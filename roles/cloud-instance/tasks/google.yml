@@ -1,0 +1,30 @@
+---
+- synchronize: src=roles/cloud-instance/files/gcloud dest=/tmp/ recursive=yes
+- gce:
+    instance_names: "{{ instance_name }}"
+    machine_type: "{{ machine_type }}"
+    image: "{{ image }}"
+    service_account_email: "{{ service_account_email }}"
+    credentials_file: "{{ credentials_file }}"
+    project_id: "{{ project_id }}"
+  register: google
+
+- add_host:
+    name: "{{ instance_name }}"
+    groups: "{{ hosts_groups }}"
+    ansible_ssh_host: "{{ item.public_ip }}"
+    ip_private: "{{ item.private_ip }}"
+  with_items: google.instance_data
+
+- wait_for: host={{ item.public_ip }} port=22 delay=10 state=drained
+  with_items: google.instance_data
+
+- shell: >
+    export CLOUDSDK_PYTHON_SITEPACKAGES=0 &&
+    /tmp/gcloud/bin/gcloud auth activate-service-account --key-file \
+    "{{ project_key }}" "{{ service_account_email }}" &&
+    /tmp/gcloud/bin/gcloud config set account "{{ service_account_email }}" &&
+    /tmp/gcloud/bin/gcloud config set compute/zone "{{ google_zone }}" &&
+    /tmp/gcloud/bin/gcloud config set project "{{ project_id }}" &&
+    /tmp/gcloud/bin/gcloud compute ssh --ssh-flag="-A" "{{instance_name}}" \
+    --ssh-key-file "{{ private_key }}" --dry-run

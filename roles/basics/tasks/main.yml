@@ -1,0 +1,54 @@
+---
+- name: Instalando repositorio epel
+  yum: name=epel-release
+
+- name: Instalando pacotes python 
+  yum: name={{ item }}
+  with_items:
+  - python-virtualenv
+  - python-pip
+  - python-devel
+  - gcc
+  - gcc-c++
+  - make
+  - cmake
+  - python-simplejson
+  - openssl-devel
+  - libffi
+  - libffi-devel
+  - pyOpenSSL
+  - pycryptopp
+  - libselinux-python
+  - python-simplejson
+  - python-devel
+  - mysql
+  - python2-PyMySQL
+  - python36-PyMySQL
+  - zabbix40-agent
+
+- name: Habilitando log remoto
+  lineinfile:
+    line: "*.* @@{{ hostvars[groups['twitter-check'][1]].ip_private }}:514"
+    path: /etc/rsyslog.conf
+  notify: "Restart rsyslog"
+
+- name: Configurando hostname em zabbix-agent
+  lineinfile:
+    line: "Hostname={{ ansible_hostname }}"
+    regexp: '^Hostname='
+    path: /etc/zabbix_agentd.conf
+  notify: "Restart zabbix-agent"
+
+- name: Configurando Server em zabbix-agent
+  lineinfile:
+    line: "Server=0.0.0.0/0"
+    regexp: '^Server='
+    path: /etc/zabbix_agentd.conf
+  notify: "Restart zabbix-agent"
+
+- name: Configurando ServerAtive em zabbix-agent
+  lineinfile:
+    line: "ServerActive={{ hostvars[groups['twitter-check'][1]].ip_private }}"
+    regexp: '^ServerActive='
+    path: /etc/zabbix_agentd.conf
+  notify: "Restart zabbix-agent"

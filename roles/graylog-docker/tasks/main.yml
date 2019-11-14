@@ -1,0 +1,10 @@
+---
+- name: Criando diretorio para docker-compose Graylog
+  file: path=/root/graylog-docker/ state=directory
+
+- name: Criando docker-compose.yml para Graylog
+  template: src=docker-compose.yml dest=/root/graylog-docker/docker-compose.yml
+
+- name: Iniciando infra docker para Graylog
+  docker_compose:
+    project_src: /root/graylog-docker

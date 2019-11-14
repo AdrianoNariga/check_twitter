@@ -1,0 +1,17 @@
+---
+- hosts: twitter-check
+  become: true
+  roles:
+  - basics
+  - docker
+
+- hosts: twitter-check[0]
+  become: true
+  roles:
+  - twitter-app
+
+- hosts: twitter-check[1]
+  become: true
+  roles:
+  - zabbix-docker
+  - graylog-docker

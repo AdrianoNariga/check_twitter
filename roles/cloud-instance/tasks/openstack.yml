@@ -1,0 +1,32 @@
+---
+- name: Criando instancia {{ instance_name }}
+  os_server:
+    state: present
+    auth:
+      auth_url: "{{ keystone_url }}"
+      username: "{{ tenant_username }}"
+      password: "{{ tenant_password }}"
+      project_name: "{{ tenant_name }}"
+    name: "{{ instance_name }}"
+    nics:
+      - net-id: "{{ net_id }}"
+    region_name: "{{ region_name }}"
+    availability_zone: "{{ availability_zone }}"
+    image: "{{ image_id }}"
+    key_name: "{{ ssh_key_name }}"
+    timeout: 800
+    flavor: "{{ flavor_name }}"
+    security_groups: "{{ security_groups }}"
+    validate_certs: false
+  register: nova
+  notify: "Waiting for instances up"
+
+- name: Adicionando instancia {{ instance_name }} ao inventario
+  add_host:
+    name: "{{ instance_name }}"
+    groups: "{{ hosts_groups }}"
+    ansible_ssh_host: "{{ nova.server.public_v4 }}"
+    ip_private: "{{ nova.server.private_v4 }}"
+
+- name: Aguardando conexao ssh para instancia {{ instance_name }}
+  wait_for: host={{ nova.server.public_v4 }} port=22 delay=5 state=drained

@@ -1,0 +1,27 @@
+---
+- name: Clonando repositorio oficial zabbix
+  git:
+    repo: https://github.com/zabbix/zabbix-docker.git
+    dest: /root/zabbix-docker
+    force: yes
+
+- name: Copiando ocker compose para zabbix em alpine
+  get_url:
+    url: https://raw.githubusercontent.com/zabbix/zabbix-docker/4.4/docker-compose_v3_alpine_pgsql_latest.yaml
+    dest: /root/zabbix-docker/docker-compose.yml
+
+- name: Configurando horario para zabbix
+  lineinfile:
+    path: /root/zabbix-docker/.env_web
+    regexp: 'PHP_TZ='
+    line: PHP_TZ=America/Sao_Paulo
+
+- name: Nomeando zabbix web
+  lineinfile:
+    path: /root/zabbix-docker/.env_web
+    regexp: 'ZBX_SERVER_NAME='
+    line: ZBX_SERVER_NAME=Check Twitter Cloud
+
+- name: Deploy da infra zabbix conteiner
+  docker_compose:
+    project_src: /root/zabbix-docker/

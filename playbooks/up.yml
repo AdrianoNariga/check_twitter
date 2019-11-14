@@ -1,0 +1,4 @@
+---
+- include: security-groups.yml
+- include: create-instances.yml
+- include: deploy.yml

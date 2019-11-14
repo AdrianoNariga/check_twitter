@@ -1,0 +1,50 @@
+---
+- name: Iniciando conteiner de banco mariaDB
+  docker_container:
+    name: mariadb-server
+    image: mariadb/server:10.4
+    state: started
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ root_db_pass }}"
+    ports:
+    - "{{ ansible_default_ipv4.address }}:3306:3306"
+
+- name: Instalando repositorio para python3
+  yum: name=centos-release-scl
+
+- name: Instalando python3
+  yum: name=rh-python36
+
+- name: Criano diretorio para app twitter
+  file: path=/opt/twitter-app/ state=directory
+
+- name: Deploy da aplicacao
+  template: src={{ item }} dest=/opt/twitter-app/{{ item }}
+  with_items:
+  - main-twitter-app.py
+  - db_structure_create.py
+
+- name: Criando virtualenv da aplicacao
+  command: /opt/rh/rh-python36/root/usr/bin/python3 -m venv /opt/twitter-app/check_twitter_xyz/
+  args:
+    creates: /opt/twitter-app/check_twitter_xyz/
+
+- name: Instalando pacotes no virtualenv
+  pip:
+    virtualenv: /opt/twitter-app/check_twitter_xyz/
+    name: "{{ item }}"
+  with_items:
+  - oauth2
+  - mysql-connector
+
+- name: Aguardado conexao com conteiner mysql
+  wait_for: host={{ ansible_default_ipv4.address }} port=3306 delay=5 state=present
+
+- name: Criando banco para aplicacao
+  mysql_db:
+    name: twitter_app
+    state: present
+    login_host: "{{ ansible_default_ipv4.address }}"
+    login_user: root
+    login_password: "{{ root_db_pass }}"
+  notify: "Create struct"

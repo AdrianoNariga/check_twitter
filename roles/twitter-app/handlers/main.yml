@@ -1,0 +1,5 @@
+---
+- name: Create struct
+  shell: |
+    source /opt/twitter-app/check_twitter_xyz/bin/activate ;
+    python3 /opt/twitter-app/db_structure_create.py

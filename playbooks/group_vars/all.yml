@@ -1,0 +1,23 @@
+---
+cloud_type: openstack
+meu_ip: 
+
+## vars openstack
+keystone_url: 
+tenant_name: 
+region_name: 
+image_id: 
+ssh_key_name: 
+net_id: 
+availability_zone: 
+domain: 
+
+graylog_root_pass_sha2: 
+
+root_db_pass: 
+
+consumer_key: ''
+consumer_secret: ''
+
+token_key: ''
+token_secret: ''

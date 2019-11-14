@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  vars:
+    instance_name: app.{{ domain }}
+    hosts_groups: twitter-check
+    #    cloud_type: openstack
+    flavor_name: 'micro.2GB'
+    security_groups: twitter-app
+  roles:
+  - cloud-instance
+
+- hosts: localhost
+  vars:
+    instance_name: mon.{{ domain }}
+    hosts_groups: twitter-check
+    #    cloud_type: openstack
+    flavor_name: 'medium.8GB'
+    security_groups: twitter-app
+  roles:
+  - cloud-instance

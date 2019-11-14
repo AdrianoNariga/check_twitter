@@ -1,0 +1,9 @@
+---
+- include: openstack.yml
+  when: cloud_type == "openstack"
+
+  #- include: google.yml
+  #  when: cloud_type == "google"
+  #
+  #- include: aws.yml
+  #  when: cloud_type == "aws"

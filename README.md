@@ -37,6 +37,8 @@ Criar uma variável shell contendo o caminho da chave privada usada nas conexõe
 ```
 
 ```console
+meu_ip: IpDeOrigem # http://meuip.com
+
 keystone_url: https://keystone.domain:5000/v2.0
 tenant_name: Tenand_name
 region_name: reg_name

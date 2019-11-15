@@ -72,4 +72,4 @@ Executar playbook up:
 	--key-file=$KEY_FILE
 ```
 ## Video de demonstração
-[![](http://img.youtube.com/vi/BcVw8qxPFvc/0.jpg)](http://www.youtube.com/watch?v=BcVw8qxPFvc "Video de demonstração do deploy")
+[![Demonstração de Deploy em OpenStack](http://img.youtube.com/vi/Qx9xhEroN68/0.jpg)](http://www.youtube.com/watch?v=Qx9xhEroN68 "Video de demostração")

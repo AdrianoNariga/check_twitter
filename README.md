@@ -44,15 +44,20 @@ keystone_url: https://keystone.domain:5000/v2.0 # grep AUTH_URL= openstackrc
 tenant_name: Tenand_name                        # grep TENANT_NAME= openstackrc
 region_name: reg_name                           # grep REGION_NAME= openstackrc
 image_id: ID_image                              # glance image-list | grep -i centos
-ssh_key_name: "name_key"                        # 
-net_id: ID_net
-availability_zone: reg_name_zone
+ssh_key_name: "name_key"                        # openstack keypair list 
+net_id: ID_net                                  # neutron net-list
+availability_zone: reg_name_zone                # openstack availability zone list
 domain: cloud.twr
 
-graylog_root_pass_sha2: 6395b16fdf5e44b86ea6f1638c02e39a31f97a07285293eaf786c99d7f41002e
+# user: admin
+# pass: admin
+graylog_root_pass_sha2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
 
 root_db_pass: passRoot
 
+# Habilitar modo desenvolvedor no twitter
+# Criar um app com token
+# https://developer.twitter.com/en/apps/
 consumer_key: 'sdfsetrerterter'
 consumer_secret: 'tretfdfgdfgd'
 

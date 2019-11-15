@@ -1,6 +1,7 @@
 ---
 cloud_type: openstack
 meu_ip: 
+rede_interna:
 
 ## vars openstack
 keystone_url: 

@@ -14,7 +14,7 @@
       remote_ip_prefix: "{{ item.dest }}"
     with_items:
     - { portmin: 22, portmax: 22, dest: "{{ meu_ip }}" }
-    - { portmin: 1, portmax: 65535, dest: 192.168.113.0/24 }
+    - { portmin: 1, portmax: 65535, dest: "{{ rede_interna }}" }
     - { portmin: 9000, portmax: 9000, dest: 0.0.0.0/0 }
     - { portmin: 80, portmax: 80, dest: 0.0.0.0/0 }
     - { portmin: 443, portmax: 443, dest: 0.0.0.0/0 }

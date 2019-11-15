@@ -37,13 +37,14 @@ Criar uma variável shell contendo o caminho da chave privada usada nas conexõe
 ```
 
 ```console
-meu_ip: IpDeOrigem # http://meuip.com
+meu_ip: IpDeOrigem                              # http://meuip.com
+rede_interna: 192.168.0.0/24                    # rede comunicacao interna
 
-keystone_url: https://keystone.domain:5000/v2.0
-tenant_name: Tenand_name
-region_name: reg_name
-image_id: ID_image
-ssh_key_name: "name_key"
+keystone_url: https://keystone.domain:5000/v2.0 # grep AUTH_URL= openstackrc
+tenant_name: Tenand_name                        # grep TENANT_NAME= openstackrc
+region_name: reg_name                           # grep REGION_NAME= openstackrc
+image_id: ID_image                              # glance image-list | grep -i centos
+ssh_key_name: "name_key"                        # 
 net_id: ID_net
 availability_zone: reg_name_zone
 domain: cloud.twr

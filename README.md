@@ -35,9 +35,8 @@ Criar uma variável shell contendo o caminho da chave privada usada nas conexõe
 ```console
 -> $ vim playbooks/group_vars/all.yml
 ```
-
 ```console
-meu_ip: IpDeOrigem                              # http://meuip.com
+meu_ip: IpDeOrigem/32                           # http://meuip.com
 rede_interna: 192.168.0.0/24                    # rede comunicacao interna
 
 keystone_url: https://keystone.domain:5000/v2.0 # grep AUTH_URL= openstackrc
@@ -52,6 +51,8 @@ domain: cloud.twr
 # user: admin
 # pass: admin
 graylog_root_pass_sha2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+# para gerar outra use:
+# https://timestampgenerator.com/tools/sha256-generator
 
 root_db_pass: passRoot
 
@@ -70,6 +71,13 @@ Executar playbook up:
 -> $ ansible-playbook playbooks/up.yml -u administrator --extra-vars \
 	"tenant_password=$OS_PASSWORD tenant_username=$OS_USERNAME" \
 	--key-file=$KEY_FILE
+```
+
+Exemplo usando arquivo de variaveis encriptados com ansible-vault
+```console
+-> $ ansible-playbook playbooks/up.yml -u administrator --extra-vars \
+	"tenant_password=$OS_PASSWORD tenant_username=$OS_USERNAME" \
+	--key-file=$KEY_FILE --ask-vault-pass -e "@playbooks/group_vars/vars_nariga.yml"
 ```
 ## Video de demonstração
 [![Demonstração de Deploy em OpenStack](http://img.youtube.com/vi/Qx9xhEroN68/0.jpg)](http://www.youtube.com/watch?v=Qx9xhEroN68 "Video de demostração")

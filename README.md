@@ -24,18 +24,18 @@ Requerimentos para deploy
 * Clientes openstack
 
 Carregar variáveis de ambiente openstack
-```console
+```shell
 -> $ source openstackrc.sh
 ```
 Criar uma variável shell contendo o caminho da chave privada usada nas conexões ssh com as instancias
-```console
+```shell
 -> $ KEY_FILE=~/.ssh/chave.pem
 ```
 <br>Preencher variaves do ansible como exemplo em:
-```console
+```shell
 -> $ vim playbooks/group_vars/all.yml
 ```
-```console
+```yaml
 meu_ip: IpDeOrigem/32                           # http://meuip.com
 rede_interna: 192.168.0.0/24                    # rede comunicacao interna
 
@@ -51,8 +51,7 @@ domain: cloud.twr
 # user: admin
 # pass: admin
 graylog_root_pass_sha2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
-# para gerar outra use:
-# https://timestampgenerator.com/tools/sha256-generator
+# para gerar outra use: https://timestampgenerator.com/tools/sha256-generator
 
 root_db_pass: passRoot
 
@@ -67,14 +66,14 @@ token_secret: 'gfhghghfhg'
 ```
 
 Executar playbook up:
-```console
+```shell
 -> $ ansible-playbook playbooks/up.yml -u administrator --extra-vars \
 	"tenant_password=$OS_PASSWORD tenant_username=$OS_USERNAME" \
 	--key-file=$KEY_FILE
 ```
 
 Exemplo usando arquivo de variaveis encriptados com ansible-vault
-```console
+```shell
 -> $ ansible-playbook playbooks/up.yml -u administrator --extra-vars \
 	"tenant_password=$OS_PASSWORD tenant_username=$OS_USERNAME" \
 	--key-file=$KEY_FILE --ask-vault-pass -e "@playbooks/group_vars/vars_nariga.yml"

@@ -1,5 +1,4 @@
 # Check Twitter
-
 ## Descrição:
 <br>Aplicação para análise de twitters a partir de uma hashtag
 <br>Coleta os últimos 100 twitters dada uma determinada hashtag e armazenando essa informação em um bando de dados MariaDB

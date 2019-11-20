@@ -16,4 +16,4 @@
   service: name=docker enabled=yes state=started
 
 - name: Instalando docker-compose via pip
-  pip: name=docker-compose
+  pip: name=docker-compose==1.24

@@ -3,6 +3,6 @@ before_script:
   - ansible --version
 
 ansible:
-  image: cytopia/ansible:2.8-tools
+  image: narigacdo/debian-ansible:2.8
   script:
     - ansible-playbook --syntax-check playbooks/*.yml

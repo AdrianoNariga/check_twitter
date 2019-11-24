@@ -5,4 +5,4 @@ before_script:
 ansible:
   image: cytopia/ansible:2.8-tools
   script:
-    - ls playbooks/*.yml | xargs -n 1 ansible-playbook --syntax-check
+    - ansible-playbook --syntax-check playbooks/*.yml
